@@ -12,6 +12,8 @@ jobs:
           - target: i686-unknown-linux-gnu
     steps:
       - uses: actions/checkout@v3
+      - name: Install rust target ${{ matrix.target }}
+        run: rustup target add ${{ matrix.target }}
       - name: Build
         run: cargo build --verbose --target ${{ matrix.target }}
       - name: Run tests
