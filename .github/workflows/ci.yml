@@ -12,11 +12,22 @@ jobs:
           - target: i686-unknown-linux-gnu
     steps:
       - uses: actions/checkout@v4
+
       - name: Install gcc-multilib
         run: sudo apt-get update && sudo apt-get install gcc-multilib
+
       - name: Install rust target ${{ matrix.target }}
         run: rustup target add ${{ matrix.target }}
-      - name: Build
-        run: cargo build --verbose --target ${{ matrix.target }}
-      - name: Run tests
-        run: cargo test --verbose --target ${{ matrix.target }}
+
+      - name: build
+        uses: ./.github/actions/build
+        with:
+          TARGET: '${{ matrix.TARGET }}'
+
+      - name: test
+        uses: ./.github/actions/test
+        with:
+          TARGET: '${{ matrix.TARGET }}'
+
+      - name: before_cache_script
+        run: sudo rm -rf $CARGO_HOME/registry/index;
