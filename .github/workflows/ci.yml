@@ -11,7 +11,7 @@ jobs:
         include:
           - target: i686-unknown-linux-gnu
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Install gcc-multilib
         run: sudo apt-get update && sudo apt-get install gcc-multilib
       - name: Install rust target ${{ matrix.target }}
